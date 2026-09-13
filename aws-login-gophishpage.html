@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Web Services Sign-In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #16191f;
+        }
+
+        /* Top Header Navigation */
+        header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 16px 32px;
+            font-size: 13px;
+            gap: 24px;
+        }
+        header a {
+            color: #0073bb;
+            text-decoration: none;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        .header-dropdown {
+            color: #565f66;
+            cursor: pointer;
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 40px;
+        }
+
+        .aws-logo {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .aws-logo svg, .aws-logo img {
+            width: 70px;
+            height: auto;
+        }
+
+        /* Card Container */
+        .signin-container {
+            background: #ffffff;
+            border: 1px solid #d5d7d9;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 380px;
+            padding: 32px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 6px;
+            color: #16191f;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #565f66;
+            margin-bottom: 20px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #16191f;
+            margin-bottom: 8px;
+        }
+
+        .section-label a {
+            font-weight: normal;
+            color: #0073bb;
+            text-decoration: none;
+        }
+
+        .section-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Radio Options Box */
+        .radio-card {
+            border: 1px solid #d5d7d9;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .radio-card input[type="radio"] {
+            accent-color: #0073bb;
+            margin-right: 8px;
+            vertical-align: middle;
+            transform: scale(1.1);
+        }
+
+        .radio-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #16191f;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .radio-desc {
+            font-size: 12px;
+            color: #565f66;
+            margin-top: 4px;
+            margin-left: 22px;
+            line-height: 1.4;
+        }
+
+        /* Input Field */
+        .input-group {
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #16191f;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #aab7b8;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+            color: #16191f;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0073bb;
+            box-shadow: 0 0 0 3px rgba(0, 115, 187, 0.15);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #ff9900;
+            color: #16191f;
+            border: none;
+            border-radius: 20px;
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: #ec8e00;
+        }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            margin: 16px 0;
+            font-size: 12px;
+            color: #565f66;
+            font-weight: 700;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #0073bb;
+            border: 1px solid #0073bb;
+            border-radius: 20px;
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 115, 187, 0.05);
+        }
+
+        /* Footer Text inside Card */
+        .footer-text {
+            font-size: 11px;
+            color: #565f66;
+            text-align: left;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+
+        .footer-text a {
+            color: #0073bb;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Page Bottom Footer */
+        .page-footer {
+            text-align: center;
+            font-size: 11px;
+            color: #565f66;
+            padding: 20px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#">Provide feedback</a>
+        <span class="header-dropdown">Multi-session disabled ▼</span>
+        <span class="header-dropdown">English ▼</span>
+    </header>
+
+    <div class="main-content">
+        <div class="aws-logo">
+            <!-- Official AWS Wordmark SVG -->
+            <svg viewBox="0 0 100 60" width="70" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#232F3E" d="M31.2 29.3c0-3.3-1.3-5-4.2-5-2.2 0-3.7 1.1-4.5 2.7v-2.4h-3.9v16.7h3.9v-8.8c0-2.3.9-3.7 2.8-3.7 1.7 0 2.4 1.1 2.4 2.8v9.7h3.9v-11zm-18.7 8.3c0 2.5 1.7 4.2 4.4 4.2 1.6 0 2.9-.6 3.6-1.7l2.4 2.2c-1.3 1.7-3.6 2.8-6.1 2.8-5 0-8.2-3.3-8.2-8.3 0-5 3.3-8.3 8.2-8.3 5 0 8.1 3.2 8.1 8.2v.9h-12.6zm8.7-3.1c0-1.7-1-2.7-2.6-2.7-1.6 0-2.6 1-2.8 2.7h5.4zM7.2 27.2h3.9v16.7H7.2V27.2zm2-8.4c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5-1.1-2.5-2.5-2.5z"/>
+                <path fill="#FF9900" d="M38.8 40.5c3.2 0 5.4-1.5 6.4-4.2l-3.3-1.4c-.6 1-1.6 1.7-3.1 1.7-1.8 0-3-1-3-3.1h10.4v-1c0-5-2.9-8-7.3-8-4.5 0-7.7 3.2-7.7 8.1 0 4.8 3.2 7.9 7.6 7.9zm-.1-10.9c1.6 0 2.7 1 2.7 2.6h-5.6c.3-1.6 1.4-2.6 2.9-2.6z"/>
+                <path fill="#FF9900" d="M49.6 24.6c2.4 0 3.7 1 4.6 2.6v-2.2h3.9v16.7h-3.9v-2.3c-.9 1.6-2.2 2.6-4.6 2.6-3.7 0-6.2-2.8-6.2-7.8 0-5 2.5-7.6 6.2-7.6zm1.1 11.5c2.3 0 3.6-1.4 3.6-3.8 0-2.3-1.3-3.8-3.6-3.8-2.3 0-3.6 1.5-3.6 3.8 0 2.4 1.3 3.8 3.6 3.8z"/>
+                <path fill="#FF9900" d="M62.6 32.8c0-4.6 3.1-8.2 7.8-8.2 4.7 0 7.8 3.6 7.8 8.2 0 4.6-3.1 8.2-7.8 8.2-4.7 0-7.8-3.6-7.8-8.2zm11.7 0c0-2.8-1.5-4.8-3.9-4.8-2.4 0-3.9 2-3.9 4.8 0 2.8 1.5 4.8 3.9 4.8 2.4 0 3.9-2 3.9-4.8z"/>
+                <path fill="#FF9900" d="M80.2 25.1h3.7v2.3c1-1.6 2.3-2.6 4.6-2.6 2.4 0 3.9 1.1 4.6 2.8 1-1.7 2.4-2.8 4.7-2.8 3.6 0 5.8 2.6 5.8 7.3v11.7h-3.9V32.9c0-2.6-1.3-4.1-3.3-4.1-1.9 0-3.1 1.2-3.5 3.1v8.8h-3.9V32.9c0-2.6-1.3-4.1-3.3-4.1-1.9 0-3.1 1.2-3.5 3.1v8.8h-3.9V25.1z"/>
+                <path fill="#FF9900" d="M52.3 44.5c-9.1 5.4-21.2 5.9-30.8 1.4-.6-.3-.3-1.2.3-.9 9.1 4.2 20.4 3.6 29.1-1.6.7-.4 1.7.5 1.4 1.1z"/>
+                <path fill="#FF9900" d="M51.1 47.9c-.4.2-.8-.1-.9-.5-.4-1.2-1.3-2.4-2.5-3.3-.5-.4 0-1.1.6-.8 1.4 1 2.5 2.4 3 3.9.2.4-.1.8-.2.7z"/>
+            </svg>
+        </div>
+
+        <div class="signin-container">
+            <h1>Sign In</h1>
+            <div class="subtitle">Access your AWS account by user type.</div>
+
+            <div class="section-label">
+                User type <a href="#">(not sure?)</a>
+            </div>
+
+            <div class="radio-card">
+                <label>
+                    <input type="radio" name="user_type" checked>
+                    <span class="radio-title">Root user</span>
+                </label>
+                <div class="radio-desc">Account owner that performs tasks requiring unrestricted access.</div>
+            </div>
+
+            <div class="radio-card">
+                <label>
+                    <input type="radio" name="user_type">
+                    <span class="radio-title">IAM user</span>
+                </label>
+                <div class="radio-desc">User within an account that performs daily tasks.</div>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" value="saagarpat16@gmail.com">
+            </div>
+
+            <button type="button" class="btn-primary">Next</button>
+
+            <div class="divider">OR</div>
+
+            <button type="button" class="btn-secondary">New to AWS? Sign up</button>
+
+            <div class="footer-text">
+                By continuing, you agree to <a href="#">AWS Customer Agreement</a> or other agreement for AWS services, and the <a href="#">Privacy Notice</a>. This site uses essential cookies. See our <a href="#">Cookie Notice</a> for more information.
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        &copy; 2026 Amazon Web Services, Inc. or its affiliates. All rights reserved.
+    </div>
+
+</body>
+</html>
