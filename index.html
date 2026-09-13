@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amazon Web Services Sign-In</title>
     <!-- Website Favicon using the official orange AWS cube icon -->
-    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="icon" type="image/png" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico">
     <style>
         body {
             font-family: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;
@@ -85,13 +85,37 @@
         }
 
         .aws-logo {
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             text-align: center;
         }
 
         .aws-logo img {
             width: 70px;
             height: auto;
+        }
+
+        /* Simulated Phishing Attack Banner Text */
+        .phishing-banner-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: #d13212;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        /* No Data Collected Sub-banner Text */
+        .phishing-sub-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: #565f66;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-family: inherit;
         }
 
         /* Wrapper for left column (form + agreement text) */
@@ -123,11 +147,6 @@
             width: 100%;
             padding: 32px;
             box-sizing: border-box;
-            display: none; /* Controlled by JS views */
-        }
-
-        .signin-container.active {
-            display: block;
         }
 
         h1 {
@@ -255,33 +274,6 @@
             box-shadow: 0 0 0 3px rgba(0, 115, 187, 0.15);
         }
 
-        /* Checkbox option for password view */
-        .checkbox-group {
-            font-size: 13px;
-            color: #16191f;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: inherit;
-        }
-
-        .checkbox-group label {
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .checkbox-group a {
-            color: #0073bb;
-            text-decoration: none;
-            font-size: 13px;
-            font-family: inherit;
-        }
-
-        .checkbox-group a:hover {
-            text-decoration: underline;
-        }
-
         /* Buttons */
         .btn-primary {
             background-color: #ff9900;
@@ -330,23 +322,6 @@
             background-color: rgba(0, 115, 187, 0.05);
         }
 
-        .text-center-link {
-            text-align: center;
-            margin-top: 12px;
-            font-family: inherit;
-        }
-
-        .text-center-link a {
-            color: #0073bb;
-            text-decoration: none;
-            font-size: 13px;
-            font-family: inherit;
-        }
-
-        .text-center-link a:hover {
-            text-decoration: underline;
-        }
-
         /* Footer Text underneath the card (Left Aligned) */
         .footer-text {
             font-size: 11px;
@@ -381,6 +356,9 @@
 </head>
 <body>
 
+    <!-- Instructions for robots meta tag to block search engines and web security scanners -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+
     <!-- Background Graphics -->
     <img src="https://signin.aws.amazon.com/v2/assets/background-left.png" alt="" class="bg-left">
     <img src="https://signin.aws.amazon.com/v2/assets/background-right.png" alt="" class="bg-right">
@@ -395,11 +373,13 @@
         <div class="aws-logo">
             <img src="https://signin.aws.amazon.com/v2/assets/_next/static/media/aws-logo@2x.7c50e6f9.png" alt="AWS Logo">
         </div>
+        <div class="phishing-banner-text">SIMULATED PHISHING ATTACK</div>
+        <div class="phishing-sub-text">NO DATA COLLECTED OR STORED</div>
 
         <div class="content-row">
             <div class="left-column">
-                <!-- VIEW 1: User Type & Email Selection -->
-                <div id="view-step1" class="signin-container active">
+                <!-- SINGLE VIEW: User Type & Email Selection -->
+                <div class="signin-container">
                     <h1>Sign In</h1>
                     <div class="subtitle">Access your AWS account by user type.</div>
 
@@ -439,36 +419,6 @@
                     <button type="button" class="btn-secondary">New to AWS? Sign up</button>
                 </div>
 
-                <!-- VIEW 2: Password Entry -->
-                <div id="view-step2" class="signin-container">
-                    <h1><span id="display-user-type">Root user</span> sign in <span style="font-size:18px; color:#0073bb; cursor:pointer;" title="Info">ⓘ</span></h1>
-                    <div class="subtitle">
-                        Enter the password for<br>
-                        <strong id="display-email" style="color:#16191f; font-weight: normal;">username@example.com</strong> 
-                        <a href="#" id="not-you-link" style="color:#0073bb; text-decoration:none;">(not you?)</a>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="password-input">Password</label>
-                        <input type="password" id="password-input" placeholder="">
-                    </div>
-
-                    <div class="checkbox-group">
-                        <label>
-                            <input type="checkbox" id="show-pwd-checkbox"> Show password
-                        </label>
-                        <a href="#">Forgot password?</a>
-                    </div>
-
-                    <button type="button" class="btn-primary" style="margin-bottom: 12px;">Sign in</button>
-
-                    <button type="button" class="btn-secondary">Sign in to a different account</button>
-
-                    <div class="text-center-link">
-                        <a href="#">Create a new AWS account</a>
-                    </div>
-                </div>
-
                 <!-- Agreement Footer Text placed underneath the card box with left alignment -->
                 <div class="footer-text">
                     By continuing, you agree to <a href="#">AWS Customer Agreement</a> or other agreement for AWS services, and the <a href="#">Privacy Notice</a>. This site uses essential cookies. See our <a href="#">Cookie Notice</a> for more information.
@@ -480,45 +430,6 @@
     <div class="page-footer">
         &copy; 2026 Amazon Web Services, Inc. or its affiliates. All rights reserved.
     </div>
-
-    <script>
-        const nextBtn = document.getElementById('next-btn');
-        const viewStep1 = document.getElementById('view-step1');
-        const viewStep2 = document.getElementById('view-step2');
-        const emailInput = document.getElementById('email-input');
-        const displayEmail = document.getElementById('display-email');
-        const displayUserType = document.getElementById('display-user-type');
-        const notYouLink = document.getElementById('not-you-link');
-        const showPwdCheckbox = document.getElementById('show-pwd-checkbox');
-        const passwordInput = document.getElementById('password-input');
-
-        // Handle Next Click
-        nextBtn.addEventListener('click', () => {
-            const selectedRadio = document.querySelector('input[name="user_type"]:checked');
-            const userTypeVal = selectedRadio ? selectedRadio.value : 'Root user';
-            const emailVal = emailInput.value.trim() || 'username@example.com';
-
-            // Populate data onto step 2
-            displayUserType.textContent = userTypeVal;
-            displayEmail.textContent = emailVal;
-
-            // Switch views
-            viewStep1.classList.remove('active');
-            viewStep2.classList.add('active');
-        });
-
-        // Handle "(not you?)" click to go back
-        notYouLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            viewStep2.classList.remove('active');
-            viewStep1.classList.add('active');
-        });
-
-        // Toggle password visibility functionality
-        showPwdCheckbox.addEventListener('change', () => {
-            passwordInput.type = showPwdCheckbox.checked ? 'text' : 'password';
-        });
-    </script>
 
 </body>
 </html>
